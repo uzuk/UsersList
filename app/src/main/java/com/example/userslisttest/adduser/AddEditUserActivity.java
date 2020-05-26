@@ -1,13 +1,10 @@
 package com.example.userslisttest.adduser;
 
 
-import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,14 +21,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.userslisttest.R;
-import com.facebook.drawee.backends.pipeline.Fresco;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
+import java.util.Objects;
 
 public class AddEditUserActivity extends AppCompatActivity {
     ///variables for the avatar
@@ -89,18 +81,8 @@ public class AddEditUserActivity extends AppCompatActivity {
             editTextAge.setText(intent.getStringExtra(EXTRA_AGE));
             colorSpinner.setSelection(((ArrayAdapter<String>) colorSpinner.getAdapter()).getPosition(intent.getStringExtra(EXTRA_COLOR)));
             imageUri = intent.getStringExtra(EXTRA_IMAGE_URI_STRING);
-            if(imageUri != null){
-                Uri uri = Uri.parse(imageUri);
-                userAvatar.setImageURI(uri);
 
-            }else {
-                userAvatar.setImageResource(R.drawable.ic_person_person);
-            }
-        } else {
-            setTitle("Add User");
-            userAvatar.setImageResource(R.drawable.ic_person_person);
         }
-
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -179,9 +161,12 @@ public class AddEditUserActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             Uri imageData = data.getData();
-            userAvatar.setImageURI(imageData);
+            assert imageData != null;
             imageUri = imageData.toString();
-            Toast.makeText(this, ""+imageUri, Toast.LENGTH_SHORT).show();
+            Uri uri = Uri.parse(imageUri);
+            userAvatar.setImageURI(uri);
+
+            Toast.makeText(this, "" + imageUri, Toast.LENGTH_LONG).show();
 
 
         }

@@ -1,5 +1,6 @@
 package com.example.userslisttest.notes;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +19,12 @@ import com.example.userslisttest.db.User;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.Objects;
 
 
 public class UserAdapter extends ListAdapter<User, UserAdapter.UserHolder> {
     public OnItemClickListener listener;
+    Context mContext;
 
     public UserAdapter() {
         super(DIFF_CALLBACK);
@@ -56,13 +59,16 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserHolder> {
         holder.textViewNameRv.setText("Name: " + currentUser.getName());
         holder.textViewAgeRv.setText("Age: " + currentUser.getAge().toString());
         holder.textViewColorRv.setText("Fav Color: " + currentUser.getFavColor());
-        String a = currentUser.getImageUriString();
-        if(a != null){
-            Uri uri = Uri.parse(a);
-        Picasso.get()
-                .load(new File(uri.getPath()))
-                .into(holder.userAvatarRv);
-        }else {holder.userAvatarRv.setImageResource(R.drawable.ic_error);}
+        String uri = currentUser.getImageUriString();
+        try {
+            Uri uri1 = Uri.parse(uri);
+            Picasso.get()
+                    .load(new File(uri1.getPath()))
+                    .fit()
+                    .into(holder.userAvatarRv);
+        }catch (NullPointerException e){
+            holder.userAvatarRv.setImageResource(R.drawable.ic_person_person);
+        }
     }
 
     //////////////////
