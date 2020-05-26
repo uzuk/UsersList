@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">UsersListTest</string>
+    <string name="name">Name:  \u0020 </string>
+    <string name="age">Age:   \u0020</string>
+    <string name="fav_color">Fav Color:  \u0020</string>
+    <string name="user_avatar">User Avatar</string>
+    <string name="add">Add</string>
+    <string name="favorite_color">Favorite Color:  </string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+</resources>
